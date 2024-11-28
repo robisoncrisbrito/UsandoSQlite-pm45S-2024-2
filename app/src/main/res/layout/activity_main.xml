@@ -19,4 +19,55 @@
         android:layout_height="wrap_content"
         android:inputType="number" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nome:" />
+
+    <EditText
+        android:id="@+id/etNome"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Telefone:" />
+
+    <EditText
+        android:id="@+id/etTelefone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="phone" />
+
+    <Button
+        android:id="@+id/btIncluir"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Incluir" />
+
+    <Button
+        android:id="@+id/btAlterar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Alterar" />
+
+    <Button
+        android:id="@+id/btExcluir"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Excluir" />
+
+    <Button
+        android:id="@+id/btPesquisar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pesquisar" />
+
+    <Button
+        android:id="@+id/btListar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Listar" />
+
 </LinearLayout>
