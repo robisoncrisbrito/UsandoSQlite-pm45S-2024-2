@@ -81,11 +81,28 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun btPesquisarOnClick() {
+        val registro = banco.query(
+            "cadastro",
+            null,
+            "_id=${binding.etCod.text.toString()}",
+            null,
+            null,
+            null,
+            null
+        )
 
+        if ( registro.moveToNext() ) {
+            binding.etNome.setText( registro.getString( 1 ) )
+            binding.etTelefone.setText( registro.getString( 2 ) )
+        } else {
+            Toast.makeText( this, "Registro não encontrado", Toast.LENGTH_LONG ).show()
+        }
     }
 
     private fun btExcluirOnClick() {
+        banco.delete( "cadastro", "_id=${binding.etCod.text.toString()}", null )
 
+        Toast.makeText( this, "Sucesso", Toast.LENGTH_LONG ).show()
     }
 
     private fun btAlterarOnClick() {
