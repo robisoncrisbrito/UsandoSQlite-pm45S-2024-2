@@ -8,12 +8,14 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import br.edu.utfpr.usandosqlite.database.DatabaseHandler
 import br.edu.utfpr.usandosqlite.databinding.ActivityMainBinding
+import br.edu.utfpr.usandosqlite.entity.Cadastro
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityMainBinding
-    private lateinit var banco : SQLiteDatabase
+    private lateinit var banco : DatabaseHandler
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,26 +48,13 @@ class MainActivity : AppCompatActivity() {
 
     private fun initDatabase() {
 
-        banco = SQLiteDatabase.openOrCreateDatabase(
-            this.getDatabasePath( "bdfile.sqlite" ),
-            null
-        )
+        banco = DatabaseHandler( this )
 
-        banco.execSQL( "CREATE TABLE IF NOT EXISTS cadastro (_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-            "nome TEXT, telefone TEXT, email TEXT )" )
     }
 
     private fun btListarOnClick() {
 
-        val registros = banco.query(
-            "cadastro",
-            null,
-            null,
-            null,
-            null,
-            null,
-            null
-        )
+        val registros = banco.list()
 
         var saida = StringBuilder()
 
@@ -81,46 +70,42 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun btPesquisarOnClick() {
-        val registro = banco.query(
-            "cadastro",
-            null,
-            "_id=${binding.etCod.text.toString()}",
-            null,
-            null,
-            null,
-            null
-        )
+        val registro = banco.find( binding.etCod.text.toString().toInt() )
 
-        if ( registro.moveToNext() ) {
-            binding.etNome.setText( registro.getString( 1 ) )
-            binding.etTelefone.setText( registro.getString( 2 ) )
+        if ( registro != null ) {
+            binding.etNome.setText( registro.nome )
+            binding.etTelefone.setText( registro.telefone )
         } else {
             Toast.makeText( this, "Registro não encontrado", Toast.LENGTH_LONG ).show()
         }
     }
 
     private fun btExcluirOnClick() {
-        banco.delete( "cadastro", "_id=${binding.etCod.text.toString()}", null )
+        banco.delete( binding.etCod.text.toString().toInt() )
 
         Toast.makeText( this, "Sucesso", Toast.LENGTH_LONG ).show()
     }
 
     private fun btAlterarOnClick() {
-        val registro = ContentValues()
-        registro.put( "nome", binding.etNome.text.toString() )
-        registro.put( "telefone", binding.etTelefone.text.toString() )
+        val cadastro = Cadastro(
+            binding.etCod.text.toString().toInt(),
+            binding.etNome.text.toString(),
+            binding.etTelefone.text.toString()
+        )
 
-        banco.update( "cadastro", registro, "_id=${binding.etCod.text.toString()}", null )
+        banco.update( cadastro )
 
         Toast.makeText( this, "Sucesso", Toast.LENGTH_LONG ).show()
     }
 
     private fun btIncluirOnClick() {
-        val registro = ContentValues()
-        registro.put( "nome", binding.etNome.text.toString() )
-        registro.put( "telefone", binding.etTelefone.text.toString() )
+        val cadastro = Cadastro(
+            0,
+            binding.etNome.text.toString(),
+            binding.etTelefone.text.toString()
+        )
 
-        banco.insert( "cadastro", null, registro )
+        banco.insert( cadastro )
 
         Toast.makeText( this, "Sucesso", Toast.LENGTH_LONG ).show()
     }
