@@ -52,7 +52,7 @@ class MainActivity : AppCompatActivity() {
         )
 
         banco.execSQL( "CREATE TABLE IF NOT EXISTS cadastro (_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-            "nome TEXT, telefone TEXT )" )
+            "nome TEXT, telefone TEXT, email TEXT )" )
     }
 
     private fun btListarOnClick() {
