@@ -1,6 +1,7 @@
 package br.edu.utfpr.usandosqlite
 
 import android.content.ContentValues
+import android.content.Intent
 import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
 import android.widget.Toast
@@ -54,19 +55,23 @@ class MainActivity : AppCompatActivity() {
 
     private fun btListarOnClick() {
 
-        val registros = banco.list()
+        val intent = Intent(  this, ListarActivity::class.java )
+        startActivity( intent )
+
+        /*val registros = banco.list()
 
         var saida = StringBuilder()
 
         while ( registros.moveToNext() ) {
             saida.append( registros.getInt( 0 ) )
             saida.append( "-" )
-            saida.append( registros.getInt( 1 ) )
+            saida.append( registros.getString( 1 ) )
             saida.append( "-" )
-            saida.append( registros.getInt( 2 ) )
+            saida.append( registros.getString( 2 ) )
         }
 
-
+        Toast.makeText( this, saida.toString(), Toast.LENGTH_LONG ).show()
+*/
     }
 
     private fun btPesquisarOnClick() {
