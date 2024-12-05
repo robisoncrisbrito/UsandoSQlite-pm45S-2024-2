@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.SimpleCursorAdapter
 import androidx.appcompat.app.AppCompatActivity
+import br.edu.utfpr.usandosqlite.adapter.ElementoListaAdapter
 import br.edu.utfpr.usandosqlite.database.DatabaseHandler
 import br.edu.utfpr.usandosqlite.databinding.ActivityListarBinding
 
@@ -23,15 +24,16 @@ class ListarActivity : AppCompatActivity() {
         /*val paises = listOf( "Brasil", "Argentina", "Paraguai", "Uruguai" )
         val adapter = ArrayAdapter<String>( this, android.R.layout.simple_list_item_1, paises )*/
 
-        val adapter = SimpleCursorAdapter(
+        /*val adapter = SimpleCursorAdapter(
             this,
             android.R.layout.simple_list_item_2,
             cursor,
             arrayOf( "nome", "telefone" ),
             intArrayOf( android.R.id.text1, android.R.id.text2 ),
             0
-        )
+        )*/
 
+        val adapter = ElementoListaAdapter( this, cursor )
         binding.lvPrincipal.adapter = adapter
 
     }
