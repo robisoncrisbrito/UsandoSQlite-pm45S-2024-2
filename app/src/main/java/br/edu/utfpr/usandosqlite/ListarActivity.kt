@@ -21,7 +21,6 @@ class ListarActivity : AppCompatActivity() {
         setContentView( binding.root )
 
         banco = DatabaseHandler(this )
-        val cursor = banco.list()
 
         /*val paises = listOf( "Brasil", "Argentina", "Paraguai", "Uruguai" )
         val adapter = ArrayAdapter<String>( this, android.R.layout.simple_list_item_1, paises )*/
@@ -35,10 +34,18 @@ class ListarActivity : AppCompatActivity() {
             0
         )*/
 
-        val adapter = ElementoListaAdapter( this, cursor )
-        binding.lvPrincipal.adapter = adapter
+
 
     }
+
+    override fun onStart() {
+        super.onStart()
+        val cursor = banco.list()
+        val adapter = ElementoListaAdapter( this, cursor )
+        binding.lvPrincipal.adapter = adapter
+    }
+
+
 
     fun btIncluirOnClick(view: View) {
         val intent = Intent( this, MainActivity::class.java )

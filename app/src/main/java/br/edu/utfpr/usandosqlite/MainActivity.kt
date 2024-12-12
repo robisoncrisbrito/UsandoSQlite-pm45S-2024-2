@@ -1,12 +1,15 @@
 package br.edu.utfpr.usandosqlite
 
 import android.content.ContentValues
+import android.content.DialogInterface
 import android.content.Intent
 import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
 import android.view.View
+import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -57,14 +60,30 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun btPesquisarOnClick() {
-        val registro = banco.find( binding.etCod.text.toString().toInt() )
 
-        if ( registro != null ) {
-            binding.etNome.setText( registro.nome )
-            binding.etTelefone.setText( registro.telefone )
-        } else {
-            Toast.makeText( this, "Registro não encontrado", Toast.LENGTH_LONG ).show()
-        }
+        val etCodDialog = EditText( this )
+
+        val dialog = AlertDialog.Builder( this )
+        dialog.setTitle( "Código de Pesquisa" )
+        dialog.setView(etCodDialog)
+        dialog.setCancelable( false )
+        dialog.setNegativeButton( "Fechar", null )
+        dialog.setPositiveButton( "Pesquisar", { dialogInterface, i ->
+            val registro = banco.find( etCodDialog.text.toString().toInt() )
+
+            if ( registro != null ) {
+                binding.etCod.setText( etCodDialog.text.toString() )
+                binding.etNome.setText( registro.nome )
+                binding.etTelefone.setText( registro.telefone )
+            } else {
+                Toast.makeText( this, "Registro não encontrado", Toast.LENGTH_LONG ).show()
+            }
+
+        } )
+        dialog.show()
+
+
+
     }
 
     private fun btExcluirOnClick() {
