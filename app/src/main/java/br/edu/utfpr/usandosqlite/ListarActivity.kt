@@ -1,6 +1,8 @@
 package br.edu.utfpr.usandosqlite
 
+import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.SimpleCursorAdapter
 import androidx.appcompat.app.AppCompatActivity
@@ -36,5 +38,10 @@ class ListarActivity : AppCompatActivity() {
         val adapter = ElementoListaAdapter( this, cursor )
         binding.lvPrincipal.adapter = adapter
 
+    }
+
+    fun btIncluirOnClick(view: View) {
+        val intent = Intent( this, MainActivity::class.java )
+        startActivity( intent )
     }
 }
