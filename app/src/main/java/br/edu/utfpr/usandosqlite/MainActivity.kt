@@ -23,11 +23,16 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate( layoutInflater )
         setContentView( binding.root )
 
-        initDatabase()
+        if ( intent.getIntExtra( "cod", 0 ) != 0 ) {
+            binding.etCod.setText( intent.getIntExtra( "cod", 0 ).toString() )
+            binding.etNome.setText( intent.getStringExtra( "nome" ) )
+            binding.etTelefone.setText( intent.getStringExtra( "telefone" ) )
+        } else {
 
-        binding.btIncluir.setOnClickListener {
-            btIncluirOnClick()
         }
+
+
+        initDatabase()
 
         binding.btAlterar.setOnClickListener {
             btAlterarOnClick()
@@ -41,37 +46,12 @@ class MainActivity : AppCompatActivity() {
             btPesquisarOnClick()
         }
 
-        binding.btListar.setOnClickListener {
-            btListarOnClick()
-        }
-
     }
 
     private fun initDatabase() {
 
         banco = DatabaseHandler( this )
 
-    }
-
-    private fun btListarOnClick() {
-
-        val intent = Intent(  this, ListarActivity::class.java )
-        startActivity( intent )
-
-        /*val registros = banco.list()
-
-        var saida = StringBuilder()
-
-        while ( registros.moveToNext() ) {
-            saida.append( registros.getInt( 0 ) )
-            saida.append( "-" )
-            saida.append( registros.getString( 1 ) )
-            saida.append( "-" )
-            saida.append( registros.getString( 2 ) )
-        }
-
-        Toast.makeText( this, saida.toString(), Toast.LENGTH_LONG ).show()
-*/
     }
 
     private fun btPesquisarOnClick() {
@@ -89,29 +69,30 @@ class MainActivity : AppCompatActivity() {
         banco.delete( binding.etCod.text.toString().toInt() )
 
         Toast.makeText( this, "Sucesso", Toast.LENGTH_LONG ).show()
+
+        finish()
     }
 
     private fun btAlterarOnClick() {
-        val cadastro = Cadastro(
-            binding.etCod.text.toString().toInt(),
-            binding.etNome.text.toString(),
-            binding.etTelefone.text.toString()
-        )
 
-        banco.update( cadastro )
-
-        Toast.makeText( this, "Sucesso", Toast.LENGTH_LONG ).show()
-    }
-
-    private fun btIncluirOnClick() {
-        val cadastro = Cadastro(
-            0,
-            binding.etNome.text.toString(),
-            binding.etTelefone.text.toString()
-        )
-
-        banco.insert( cadastro )
+        if ( binding.etCod.text.toString().isEmpty() ) {
+            val cadastro = Cadastro(
+                0,
+                binding.etNome.text.toString(),
+                binding.etTelefone.text.toString()
+            )
+            banco.insert( cadastro )
+        } else {
+            val cadastro = Cadastro(
+                binding.etCod.text.toString().toInt(),
+                binding.etNome.text.toString(),
+                binding.etTelefone.text.toString()
+            )
+            banco.update(cadastro)
+        }
 
         Toast.makeText( this, "Sucesso", Toast.LENGTH_LONG ).show()
+        finish()
     }
+
 }

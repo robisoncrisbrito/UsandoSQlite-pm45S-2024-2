@@ -41,16 +41,10 @@
         android:inputType="phone" />
 
     <Button
-        android:id="@+id/btIncluir"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Incluir" />
-
-    <Button
         android:id="@+id/btAlterar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Alterar" />
+        android:text="Salvar" />
 
     <Button
         android:id="@+id/btExcluir"
@@ -63,11 +57,5 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Pesquisar" />
-
-    <Button
-        android:id="@+id/btListar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Listar" />
 
 </LinearLayout>
